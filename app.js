@@ -61,6 +61,10 @@ app.use(cookieParser());
 app.use(xss());
 
 // Routes
+const userRoute = require("./routes/userRoute");
+
+// URL
+app.use("/api/v1/user", userRoute);
 
 // Handle Not Found
 app.all("*", (req, res, next) => {
