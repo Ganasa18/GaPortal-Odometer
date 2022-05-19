@@ -28,22 +28,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(60),
         allowNull: true,
       },
-      email: {
-        type: Sequelize.STRING(128),
-        allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: {
-            args: true,
-            msg: "Must use valid email",
-          },
-          customValidator(value) {
-            if (value === null || value == "") {
-              throw new Error("description can't be null or empty");
-            }
-          },
-        },
-      },
       phoneNumber: {
         type: Sequelize.STRING(60),
         allowNull: false,
@@ -97,6 +81,6 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   User.sync({});
-  console.log(User);
+
   return User;
 };
