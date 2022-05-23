@@ -23,5 +23,11 @@ db.sequelize = sequelize;
 
 // Models
 db.users = require("./modelUser.js")(sequelize, Sequelize);
+db.roles = require("./modelRole.js")(sequelize, Sequelize);
+db.areas = require("./modelArea.js")(sequelize, Sequelize);
+db.departements = require("./modelDepartement.js")(sequelize, Sequelize);
+db.menus = require("./modelMenu.js")(sequelize, Sequelize);
+
+// db.sequelize.sync({});
 
 module.exports = db;

@@ -10,6 +10,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       username: {
+        unique: true,
         type: Sequelize.STRING(60),
         allowNull: false,
         validate: {
@@ -19,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
             }
           },
         },
+      },
+      email: {
+        type: Sequelize.STRING(128),
+        allowNull: true,
       },
       firstName: {
         type: Sequelize.STRING(60),
@@ -36,6 +41,18 @@ module.exports = (sequelize, Sequelize) => {
             if (value === null || value === "") {
               throw new Error("phone number can't be null or empty");
             }
+          },
+        },
+      },
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "password is required",
+          },
+          notEmpty: {
+            msg: "please provide a password",
           },
         },
       },
@@ -80,7 +97,6 @@ module.exports = (sequelize, Sequelize) => {
       },
     }
   );
-  User.sync({});
-
+  // User.sync({ force: true });
   return User;
 };

@@ -1,15 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
-  const Area = sequelize.define("m_area", {
-    area_name: {
+  const Menu = sequelize.define("m_menu", {
+    menu_name: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
         customValidator(value) {
           if (value === null || value == "") {
-            throw new Error("area name can't be null or empty");
+            throw new Error("menu name can't be null or empty");
           }
         },
       },
+    },
+    menu_url: {
+      type: Sequelize.STRING(60),
+      allowNull: true,
+    },
+    menu_icon: {
+      type: Sequelize.STRING(60),
+      allowNull: true,
     },
     createdAt: {
       allowNull: false,
@@ -22,6 +30,5 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.fn("NOW"),
     },
   });
-  // Area.sync({});
-  return Area;
+  return Menu;
 };

@@ -1,7 +1,17 @@
 const express = require("express");
-const userController = require("../controller/userController.js");
+const userController = require("../controller/userController");
+const authController = require("../controller/authController");
 const router = express.Router();
 
-router.route("/user").get(userController.getAllUser);
+router.route("/login-web").post(authController.loginWeb);
+router.route("/login-mobile").post(authController.loginMobile);
+
+router
+  .route("/")
+  .get(userController.getAllUser)
+  .post(userController.createUser);
+
+router.route("/:uuid").patch(userController.updatedUser);
+router.route("/:id").delete(userController.deleteUser);
 
 module.exports = router;

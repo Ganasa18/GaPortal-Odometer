@@ -22,6 +22,6 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.fn("NOW"),
     },
   });
-  Departement.sync({});
+  // Departement.sync({});
   return Departement;
 };
