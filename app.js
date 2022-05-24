@@ -64,11 +64,13 @@ app.use(xss());
 const userRoute = require("./routes/userRoute");
 const roleRoute = require("./routes/roleRoute");
 const menuRoute = require("./routes/menuRoute");
+const areaRoute = require("./routes/areaRoute");
 
 // URL
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/role", roleRoute);
 app.use("/api/v1/menu", menuRoute);
+app.use("/api/v1/area", areaRoute);
 
 // Handle Not Found
 app.all("*", (req, res, next) => {

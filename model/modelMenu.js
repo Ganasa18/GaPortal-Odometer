@@ -19,6 +19,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(60),
       allowNull: true,
     },
+    is_deleted: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE,
@@ -30,5 +34,8 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.fn("NOW"),
     },
   });
+
+  // Menu.sync({ force: true });
+
   return Menu;
 };

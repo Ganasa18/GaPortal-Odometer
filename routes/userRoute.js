@@ -11,7 +11,7 @@ router
   .get(userController.getAllUser)
   .post(userController.createUser);
 
-router.route("/:uuid").patch(userController.updatedUser);
-router.route("/:id").delete(userController.deleteUser);
+router.route("/edit/:uuid").patch(userController.updatedUser);
+router.route("/delete/:uuid").patch(userController.deleteUser);
 
 module.exports = router;

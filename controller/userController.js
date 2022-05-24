@@ -166,5 +166,32 @@ exports.updatedUser = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
-  const id = req.params.id;
+  const uuid = req.params.uuid;
+
+  const data = {
+    is_active: req.body.is_active,
+  };
+
+  const checkuser = await User.findAll({
+    where: {
+      uuid: uuid,
+    },
+  });
+
+  if (checkuser == null) {
+    return next(new AppError("Edit must with valid ID", 400));
+  }
+
+  await User.update(data, {
+    where: {
+      uuid: uuid,
+    },
+  });
+
+  res.status(200).json({
+    status: "success updated",
+    data: {
+      user: `delete success`,
+    },
+  });
 });

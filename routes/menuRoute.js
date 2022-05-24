@@ -8,5 +8,7 @@ router
   .route("/")
   .get(menuController.getAllMenu)
   .post(menuController.createMenu);
+router.route("/edit/:id").patch(menuController.editMenu);
+router.route("/delete/:id").patch(menuController.deleteMenu);
 
 module.exports = router;

@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 
+// Fungsi initial token jwt
 const signToken = (userWithEmail) => {
   return jwt.sign(
     {
