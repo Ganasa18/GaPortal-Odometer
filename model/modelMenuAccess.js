@@ -15,10 +15,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: true,
     },
-    menu_status: {
-      type: Sequelize.BOOLEAN,
-      allowNull: true,
-    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE,

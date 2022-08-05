@@ -27,6 +27,10 @@ db.roles = require("./modelRole.js")(sequelize, Sequelize);
 db.areas = require("./modelArea.js")(sequelize, Sequelize);
 db.departements = require("./modelDepartement.js")(sequelize, Sequelize);
 db.menus = require("./modelMenu.js")(sequelize, Sequelize);
+db.menusacc = require("./modelMenuAccess.js")(sequelize, Sequelize);
+db.cars = require("./modelCar.js")(sequelize, Sequelize);
+db.locations = require("./modelLocation.js")(sequelize, Sequelize);
+db.reports = require("./modelReport.js")(sequelize, Sequelize);
 
 // db.sequelize.sync({});
 

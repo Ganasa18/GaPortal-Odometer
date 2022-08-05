@@ -22,7 +22,7 @@ const signToken = (userWithEmail) => {
   );
 };
 
-const createSendToken = (userWithEmail, statusCode, res) => {
+const createSendToken = (userWithEmail, statusCode, res, dataFullUser = []) => {
   const token = signToken(userWithEmail);
   //   option jwt
   const cookieOptions = {
@@ -40,6 +40,7 @@ const createSendToken = (userWithEmail, statusCode, res) => {
     token,
     data: {
       user: userWithEmail,
+      data_user: dataFullUser,
     },
   });
 };
@@ -79,10 +80,36 @@ exports.loginMobile = catchAsync(async (req, res, next) => {
   const phoneNumber = req.body.phoneNumber;
   const password = "123";
 
-  //  Check jika email dan password terisi
+  //  Check jika phone number terisi
   if (!phoneNumber) {
     return next(new AppError("Please provide phoneNumber!", 400));
   }
+
+  const dataFullUser = await db.sequelize
+    .query(
+      `SELECT users.id, users.uuid, users.username,users.firstName, users.lastName,users.phoneNumber,
+    users.address, users.area, users.departement,users.role,users.plate_car,users.car_1,users.car_2,users.car_3,users.car_4,
+    m_cars.license_plate, m_cars.model_vehicle, m_cars.id as car_pk, m_areas.area_name, 
+    m_areas.id as area_pk, m_departements.id as departement_pk, m_departements.departement_name
+    FROM users
+    LEFT JOIN m_cars 
+    ON users.plate_car = m_cars.license_plate
+    LEFT JOIN m_areas 
+    ON users.area = m_areas.id
+    LEFT JOIN m_departements 
+    ON users.departement = m_departements.id
+    WHERE users.phoneNumber = ${phoneNumber}
+    ORDER BY users.id DESC;
+    `,
+      {
+        raw: true,
+        model: User,
+        mapToModel: true, // pass true here if you have any mapped fields
+      }
+    )
+    .catch((err) => {
+      console.log("Error", err);
+    });
 
   const userWithEmail = await User.findOne({
     where: {
@@ -92,14 +119,12 @@ exports.loginMobile = catchAsync(async (req, res, next) => {
     console.log("Error", err);
   });
 
-  console.log(userWithEmail.role);
+  if (!userWithEmail) {
+    return next(new AppError("Incorrect phone number", 401));
+  }
 
   if (userWithEmail.role == "ADMIN") {
     return next(new AppError("Cannot login this feature ", 401));
-  }
-
-  if (!userWithEmail) {
-    return next(new AppError("Incorrect phone number", 401));
   }
 
   //  Check password match
@@ -110,7 +135,7 @@ exports.loginMobile = catchAsync(async (req, res, next) => {
   }
 
   //Jika semua kondisi terpenuhi send token
-  createSendToken(userWithEmail, 200, res);
+  createSendToken(userWithEmail, 200, res, dataFullUser);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -149,3 +174,13 @@ exports.protect = catchAsync(async (req, res, next) => {
   res.locals.user = currentUser;
   next();
 });
+
+exports.logout = (req, res) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    status: "success",
+  });
+};

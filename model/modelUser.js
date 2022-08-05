@@ -21,10 +21,6 @@ module.exports = (sequelize, Sequelize) => {
           },
         },
       },
-      email: {
-        type: Sequelize.STRING(128),
-        allowNull: true,
-      },
       firstName: {
         type: Sequelize.STRING(60),
         allowNull: true,
@@ -34,6 +30,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: true,
       },
       phoneNumber: {
+        unique: true,
         type: Sequelize.STRING(60),
         allowNull: false,
         validate: {
@@ -43,6 +40,10 @@ module.exports = (sequelize, Sequelize) => {
             }
           },
         },
+      },
+      address: {
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
       password: {
         type: Sequelize.STRING,
@@ -67,6 +68,26 @@ module.exports = (sequelize, Sequelize) => {
       role: {
         type: Sequelize.STRING(60),
         allowNull: false,
+      },
+      plate_car: {
+        type: Sequelize.STRING(60),
+        allowNull: true,
+      },
+      car_1: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
+      car_2: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
+      car_3: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
+      car_4: {
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
       is_active: {
         type: Sequelize.BOOLEAN,

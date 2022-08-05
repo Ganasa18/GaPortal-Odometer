@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Departement = sequelize.define("m_departement", {
+  const Departement = sequelize.define("m_departements", {
     departement_name: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -7,6 +7,17 @@ module.exports = (sequelize, Sequelize) => {
         customValidator(value) {
           if (value === null || value == "") {
             throw new Error("departement name can't be null or empty");
+          }
+        },
+      },
+    },
+    id_area: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: {
+        customValidator(value) {
+          if (value === null || value == "") {
+            throw new Error("area name can't be null or empty");
           }
         },
       },
@@ -22,6 +33,6 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.fn("NOW"),
     },
   });
-  // Departement.sync({});
+  // Departement.sync({ force: true });
   return Departement;
 };

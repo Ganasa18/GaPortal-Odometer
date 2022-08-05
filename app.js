@@ -8,9 +8,14 @@ const rateLimit = require("express-rate-limit");
 const xss = require("xss-clean");
 const Sequelize = require("sequelize");
 const dbConfig = require("./config/database.js");
+const path = require("path");
+const bodyParser = require("body-parser");
 
 // Initial express
 const app = express();
+
+// Serving static files
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Handler Error
 const AppError = require("./utils/appError");
@@ -43,6 +48,8 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again in an hour!",
 });
 
+// app.use(bodyParser.json());
+
 // Body parser, reading data from body into req.body
 app.use(
   express.json({
@@ -65,12 +72,20 @@ const userRoute = require("./routes/userRoute");
 const roleRoute = require("./routes/roleRoute");
 const menuRoute = require("./routes/menuRoute");
 const areaRoute = require("./routes/areaRoute");
+const departementRoute = require("./routes/departementRoute");
+const carsRoute = require("./routes/carsRoute");
+const locationRoute = require("./routes/locationRoute");
+const reportRoute = require("./routes/reportRoute");
 
 // URL
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/role", roleRoute);
 app.use("/api/v1/menu", menuRoute);
 app.use("/api/v1/area", areaRoute);
+app.use("/api/v1/departement", departementRoute);
+app.use("/api/v1/cars", carsRoute);
+app.use("/api/v1/location", locationRoute);
+app.use("/api/v1/report", reportRoute);
 
 // Handle Not Found
 app.all("*", (req, res, next) => {

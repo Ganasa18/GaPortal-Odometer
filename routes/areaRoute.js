@@ -8,4 +8,9 @@ router
   .get(areaController.getAllArea)
   .post(areaController.createArea);
 
+router
+  .route("/:id")
+  .patch(areaController.updatedArea)
+  .delete(areaController.deleteArea);
+
 module.exports = router;
